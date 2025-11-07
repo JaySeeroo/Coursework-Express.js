@@ -1,0 +1,28 @@
+{
+  "name": "coursework-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "Server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "object-assign": "^4.1.1",
+    "properties-reader": "^2.3.0",
+    "vary": "^1.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JaySeeroo/Coursework-Express.js.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/JaySeeroo/Coursework-Express.js/issues"
+  },
+  "homepage": "https://github.com/JaySeeroo/Coursework-Express.js#readme"
+}
