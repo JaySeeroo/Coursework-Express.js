@@ -19,6 +19,37 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.use((req, res, next) => {
+  const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.url}`;
+  console.log(logEntry);
+  next();
+});
+
+const iconMap = {
+  math: "fas fa-square-root-alt",
+  english: "fas fa-book",
+  science: "fas fa-flask",
+  history: "fas fa-landmark",
+  geography: "fas fa-map-marked-alt",
+  art: "fas fa-paint-brush",
+  music: "fas fa-music",
+  programming: "fas fa-laptop-code",
+  drama: "fas fa-theater-masks",
+  sports: "fas fa-football-ball",
+  biology: "fas fa-dna",
+  "computer graphics": "fas fa-desktop"
+};
+
+app.get("/icons/:subject", (req, res) => {
+  const subject = req.params.subject.toLowerCase();
+  const icon = iconMap[subject];
+  if (icon) {
+    res.json({ subject, icon });
+  } else {
+    res.status(404).send("Icon not found for subject");
+  }
+});
+
 // GET all lessons
 app.get("/api/lessons", async (req, res) => {
   try {
@@ -85,7 +116,7 @@ async function start() {
   try {
     await client.connect();
     console.log("Connected to MongoDB Atlas");
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
   } catch (err) {
     console.error("Connection error:", err);
   }
