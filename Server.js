@@ -19,19 +19,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// GET lessons from MongoDB
+// GET all lessons
 app.get("/api/lessons", async (req, res) => {
   try {
     const collection = client.db(dbName).collection("Products");
     const lessons = await collection.find({}).toArray();
     res.json(lessons);
   } catch (err) {
-    console.error(err);
     res.status(500).send("Error fetching lessons");
   }
 });
 
-// POST order (example)
+// POST order
 app.post("/api/orders", async (req, res) => {
   try {
     const order = req.body;
@@ -39,12 +38,33 @@ app.post("/api/orders", async (req, res) => {
     await collection.insertOne(order);
     res.status(201).send("Order saved");
   } catch (err) {
-    console.error(err);
     res.status(500).send("Error saving order");
   }
 });
 
-const PORT = process.env.PORT || 3000;
+// GET search
+app.get("/search", async (req, res) => {
+  try {
+    const query = req.query.q?.toLowerCase() || "";
+    const collection = client.db(dbName).collection("Products");
+
+    const results = await collection.find({
+      $or: [
+        { subject: { $regex: query, $options: "i" } },
+        { location: { $regex: query, $options: "i" } },
+        { $expr: { $regexMatch: { input: { $toString: "$price" }, regex: query, options: "i" } } },
+        { $expr: { $regexMatch: { input: { $toString: "$spaces" }, regex: query, options: "i" } } }
+      ]
+    }).toArray();
+
+    res.json(results);
+  } catch (err) {
+    console.error("Search error:", err);
+    res.status(500).send("Search failed");
+  }
+});
+
+const PORT = 3000;
 
 async function start() {
   try {
