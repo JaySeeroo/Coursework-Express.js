@@ -19,12 +19,18 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+/* ---------------------------
+   Logger Middleware
+   --------------------------- */
 app.use((req, res, next) => {
   const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.url}`;
   console.log(logEntry);
   next();
 });
 
+/* ---------------------------
+   Icon Metadata Middleware
+   --------------------------- */
 const iconMap = {
   math: "fas fa-square-root-alt",
   english: "fas fa-book",
@@ -50,8 +56,10 @@ app.get("/icons/:subject", (req, res) => {
   }
 });
 
-// GET all lessons
-app.get("/api/lessons", async (req, res) => {
+/* ---------------------------
+   GET /lessons
+   --------------------------- */
+app.get("/lessons", async (req, res) => {
   try {
     const collection = client.db(dbName).collection("Products");
     const lessons = await collection.find({}).toArray();
@@ -62,8 +70,10 @@ app.get("/api/lessons", async (req, res) => {
   }
 });
 
-// POST an order
-app.post("/api/orders", async (req, res) => {
+/* ---------------------------
+   POST /orders
+   --------------------------- */
+app.post("/orders", async (req, res) => {
   try {
     const { name, phone, items } = req.body;
     if (!name || !phone || !Array.isArray(items)) {
@@ -88,7 +98,38 @@ app.post("/api/orders", async (req, res) => {
   }
 });
 
-// GET full-text search
+/* ---------------------------
+   PUT /lessons/:id
+   --------------------------- */
+app.put("/lessons/:id", async (req, res) => {
+  try {
+    const lessonId = req.params.id;
+    const updates = req.body;
+
+    if (!ObjectId.isValid(lessonId)) {
+      return res.status(400).send("Invalid lesson ID");
+    }
+
+    const collection = client.db(dbName).collection("Products");
+    const result = await collection.updateOne(
+      { _id: new ObjectId(lessonId) },
+      { $set: updates }
+    );
+
+    if (result.matchedCount === 0) {
+      return res.status(404).send("Lesson not found");
+    }
+
+    res.send("Lesson updated");
+  } catch (err) {
+    console.error("Error updating lesson:", err);
+    res.status(500).send("Update failed");
+  }
+});
+
+/* ---------------------------
+   GET /search
+   --------------------------- */
 app.get("/search", async (req, res) => {
   try {
     const query = req.query.q?.toLowerCase() || "";
