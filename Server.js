@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const { MongoClient } = require("mongodb");
+const { MongoClient, ObjectId } = require("mongodb");
 const PropertiesReader = require("properties-reader");
 
 const properties = PropertiesReader("dbconnection.properties");
@@ -26,23 +26,38 @@ app.get("/api/lessons", async (req, res) => {
     const lessons = await collection.find({}).toArray();
     res.json(lessons);
   } catch (err) {
+    console.error("Error fetching lessons:", err);
     res.status(500).send("Error fetching lessons");
   }
 });
 
-// POST order
+// POST an order
 app.post("/api/orders", async (req, res) => {
   try {
-    const order = req.body;
-    const collection = client.db(dbName).collection("Orders");
-    await collection.insertOne(order);
+    const { name, phone, items } = req.body;
+    if (!name || !phone || !Array.isArray(items)) {
+      return res.status(400).send("Invalid order format");
+    }
+
+    const ordersCollection = client.db(dbName).collection("Orders");
+    await ordersCollection.insertOne({ name, phone, items });
+
+    const lessonsCollection = client.db(dbName).collection("Products");
+    for (const item of items) {
+      await lessonsCollection.updateOne(
+        { _id: new ObjectId(item.lessonId) },
+        { $inc: { spaces: -item.qty } }
+      );
+    }
+
     res.status(201).send("Order saved");
   } catch (err) {
+    console.error("Error saving order:", err);
     res.status(500).send("Error saving order");
   }
 });
 
-// GET search
+// GET full-text search
 app.get("/search", async (req, res) => {
   try {
     const query = req.query.q?.toLowerCase() || "";
