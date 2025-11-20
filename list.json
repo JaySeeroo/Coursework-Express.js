@@ -39,7 +39,7 @@
     "location": "Bristol",
     "price": 35,
     "spaces": 5,
-    "icon": "fas fa-paint-brush"
+    "image": "/images/art.jpeg"
   },
   {
     "subject": "Music",
