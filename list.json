@@ -1,86 +1,86 @@
 [
   {
     "subject": "Math",
-    "location": "London",
-    "price": 50,
+    "location": "Hendon",
+    "price": 100,
     "spaces": 5,
-    "icon": "fas fa-square-root-alt"
+    "image": "/images/math.jpeg"
   },
   {
     "subject": "English",
-    "location": "Manchester",
-    "price": 40,
+    "location": "Colindale",
+    "price": 80,
     "spaces": 5,
-    "icon": "fas fa-book"
+    "image": "/images/english.jpeg"
   },
   {
     "subject": "Science",
-    "location": "Birmingham",
-    "price": 60,
+    "location": "Brent Cross",
+    "price": 90,
     "spaces": 5,
-    "icon": "fas fa-flask"
+    "image": "/images/science.jpeg"
   },
   {
     "subject": "History",
-    "location": "Liverpool",
-    "price": 45,
+    "location": "Golders Green",
+    "price": 95,
     "spaces": 5,
-    "icon": "fas fa-landmark"
+    "image": "/images/history.jpeg"
   },
   {
     "subject": "Geography",
-    "location": "Leeds",
-    "price": 55,
+    "location": "Camden",
+    "price": 85,
     "spaces": 5,
-    "icon": "fas fa-map-marked-alt"
+    "image": "/images/geography.jpeg"
+  },
+  {
+    "subject": "Biology",
+    "location": "Finchley",
+    "price": 90,
+    "spaces": 5,
+    "image": "/images/biology.jpeg"
+  },
+  {
+    "subject": "Programming",
+    "location": "Barnet",
+    "price": 120,
+    "spaces": 5,
+    "image": "/images/programming.png"
+  },
+  {
+    "subject": "Computer Graphics",
+    "location": "Mill Hill",
+    "price": 110,
+    "spaces": 5,
+    "image": "/images/computer_graphics.jpeg"
+  },
+  {
+    "subject": "Drama",
+    "location": "Edgware",
+    "price": 70,
+    "spaces": 5,
+    "image": "/images/drama.png"
+  },
+  {
+    "subject": "Music",
+    "location": "Kingsbury",
+    "price": 75,
+    "spaces": 5,
+    "image": "/images/music.jpeg"
   },
   {
     "subject": "Art",
-    "location": "Bristol",
-    "price": 35,
+    "location": "Neasden",
+    "price": 65,
     "spaces": 5,
     "image": "/images/art.jpeg"
   },
   {
-    "subject": "Music",
-    "location": "Oxford",
-    "price": 50,
-    "spaces": 5,
-    "icon": "fas fa-music"
-  },
-  {
-    "subject": "Programming",
-    "location": "Cambridge",
-    "price": 70,
-    "spaces": 5,
-    "icon": "fas fa-laptop-code"
-  },
-  {
-    "subject": "Drama",
-    "location": "Brighton",
-    "price": 40,
-    "spaces": 5,
-    "icon": "fas fa-theater-masks"
-  },
-  {
     "subject": "Sports",
-    "location": "Newcastle",
-    "price": 30,
+    "location": "Wembley",
+    "price": 60,
     "spaces": 5,
-    "icon": "fas fa-football-ball"
-  },
-  {
-    "subject": "Biology",
-    "location": "Sheffield",
-    "price": 65,
-    "spaces": 5,
-    "icon": "fas fa-dna"
-  },
-  {
-    "subject": "Computer Graphics",
-    "location": "Nottingham",
-    "price": 75,
-    "spaces": 5,
-    "icon": "fas fa-desktop"
+    "image": "/images/sports.jpeg"
   }
 ]
