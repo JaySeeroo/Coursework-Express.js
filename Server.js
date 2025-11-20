@@ -53,14 +53,14 @@ app.get("/lessons", async (req, res) => {
    --------------------------- */
 app.post("/orders", async (req, res) => {
   try {
-    const { name, phone, items } = req.body;
+    const { name, phone, address, items } = req.body;
     if (!name || !phone || !Array.isArray(items)) {
       return res.status(400).send("Invalid order format");
     }
 
     const ordersCollection = client.db(dbName).collection("Orders");
-    await ordersCollection.insertOne({ name, phone, items });
-
+    await ordersCollection.insertOne({ name, phone, address, items });
+    
     const lessonsCollection = client.db(dbName).collection("Products");
     for (const item of items) {
       await lessonsCollection.updateOne(
