@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const { MongoClient, ObjectId } = require("mongodb");
 const PropertiesReader = require("properties-reader");
 
@@ -29,32 +30,9 @@ app.use((req, res, next) => {
 });
 
 /* ---------------------------
-   Icon Metadata Middleware
+   Static Image Middleware
    --------------------------- */
-const iconMap = {
-  math: "fas fa-square-root-alt",
-  english: "fas fa-book",
-  science: "fas fa-flask",
-  history: "fas fa-landmark",
-  geography: "fas fa-map-marked-alt",
-  art: "fas fa-paint-brush",
-  music: "fas fa-music",
-  programming: "fas fa-laptop-code",
-  drama: "fas fa-theater-masks",
-  sports: "fas fa-football-ball",
-  biology: "fas fa-dna",
-  "computer graphics": "fas fa-desktop"
-};
-
-app.get("/icons/:subject", (req, res) => {
-  const subject = req.params.subject.toLowerCase();
-  const icon = iconMap[subject];
-  if (icon) {
-    res.json({ subject, icon });
-  } else {
-    res.status(404).send("Icon not found for subject");
-  }
-});
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 /* ---------------------------
    GET /lessons
