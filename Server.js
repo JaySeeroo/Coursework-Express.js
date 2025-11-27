@@ -93,25 +93,21 @@ app.post("/orders", async (req, res) => {
   }
 });
 
-/* ---------------------------
-   PUT /lessons/:id
-   Update lesson details by ID
-   --------------------------- */
 app.put("/lessons/:id", async (req, res) => {
   try {
+    // Extract lesson ID from URL and the fields to update
     const lessonId = req.params.id;
-    const updates = req.body;
+    const updates = req.body;          
 
-    // Validate ObjectId format
     if (!ObjectId.isValid(lessonId)) {
       return res.status(400).send("Invalid lesson ID");
     }
 
-    // Update lesson in Products collection
+    //$set is used to allow updating any attribute cleanly
     const collection = client.db(dbName).collection("Products");
     const result = await collection.updateOne(
-      { _id: new ObjectId(lessonId) },
-      { $set: updates }
+      { _id: new ObjectId(lessonId) }, // Document filter
+      { $set: updates }                // Fields to update
     );
 
     if (result.matchedCount === 0) {
@@ -119,6 +115,7 @@ app.put("/lessons/:id", async (req, res) => {
     }
 
     res.send("Lesson updated");
+
   } catch (err) {
     console.error("Error updating lesson:", err);
     res.status(500).send("Update failed");
