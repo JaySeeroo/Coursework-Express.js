@@ -159,7 +159,7 @@ async function start() {
   try {
     await client.connect();
     console.log("Connected to MongoDB Atlas");
-    app.listen(PORT, () => console.log(`✅ Server running at http://localhost:${PORT}`));
+    app.listen(PORT, () => console.log(`Connected to Server`));
   } catch (err) {
     console.error("Connection error:", err);
   }
